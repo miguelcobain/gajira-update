@@ -25,7 +25,7 @@ async function exec () {
       return
     }
 
-    console.log('Failed to transition issue.')
+    console.log('Failed to update issue.')
     process.exit(78)
   } catch (error) {
     console.error(error)
@@ -34,18 +34,15 @@ async function exec () {
 }
 
 function parseArgs () {
-  const transition = core.getInput('transition')
-  const transitionId = core.getInput('transitionId')
+  const payload = core.getInput('payload')
 
-  if (!transition && !transitionId) {
-    // Either transition _or_ transitionId _must_ be provided
-    throw new Error('Error: please specify either a transition or transitionId')
+  if (!payload) {
+    throw new Error('Error: please specify an update payload')
   }
 
   return {
     issue: core.getInput('issue'),
-    transition,
-    transitionId,
+    payload,
   }
 }
 

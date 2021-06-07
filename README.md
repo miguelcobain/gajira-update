@@ -1,7 +1,6 @@
-# Jira Transition
-Transition Jira issue
+# Jira Update
+Update Jira issue
 
-For examples on how to use this, check out the [gajira-demo](https://github.com/atlassian/gajira-demo) repository
 > ##### Only supports Jira Cloud. Does not support Jira Server (hosted)
 
 ## Usage
@@ -13,12 +12,17 @@ For examples on how to use this, check out the [gajira-demo](https://github.com/
 Example transition action:
 
 ```yaml
-- name: Transition issue
-  id: transition
-  uses: atlassian/gajira-transition@master
+- name: Update issue
+  id: update
+  uses: miguelcobain/gajira-update@master
   with:
     issue: GA-181
-    transition: "In progress"
+    payload:
+      fields:
+        fixVersions:
+        - name: Next Hotfix
+        - name: Next Release
+        customfield_10095: someValue
 }
 ```
 
@@ -28,7 +32,7 @@ The `issue` parameter can be an issue id created or retrieved by an upstream act
 on:
   push
 
-name: Test Transition Issue
+name: Test Update Issue
 
 jobs:
   test-transition-issue:
@@ -50,7 +54,12 @@ jobs:
       uses: atlassian/gajira-transition@master
       with:
         issue: ${{ steps.create.outputs.issue }}
-        transition: "In progress"
+        payload:
+          fields:
+            fixVersions:
+            - name: Next Hotfix
+            - name: Next Release
+            customfield_10095: someValue
 ```
 ----
 ## Action Spec:
@@ -60,15 +69,14 @@ jobs:
 
 ### Inputs
 - `issue` (required) - issue key to perform a transition on
-- `transition` - Case insensetive name of transition to apply. Example: `Cancel` or `Accept`
-- `transitionId` - transition id to apply to an issue
+- `payload` (required) - The payload data to send to the api. (check the body parameters of in the [api docs](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issues/#api-rest-api-3-issue-issueidorkey-put))
 
 ### Outputs
 - None
 
 ### Reads fields from config file at $HOME/jira/config.yml
 - `issue`
-- `transitionId`
+- `payload`
 
 ### Writes fields to config file at $HOME/jira/config.yml
 - None

@@ -31,19 +31,11 @@ class Jira {
     }
   }
 
-  async getIssueTransitions (issueId) {
-    return this.fetch('getIssueTransitions', {
-      pathname: `/rest/api/2/issue/${issueId}/transitions`,
-    }, {
-      method: 'GET',
-    })
-  }
-
-  async transitionIssue (issueId, data) {
+  async updateIssue (issueId, data) {
     return this.fetch('transitionIssue', {
-      pathname: `/rest/api/3/issue/${issueId}/transitions`,
+      pathname: `/rest/api/3/issue/${issueId}`,
     }, {
-      method: 'POST',
+      method: 'PUT',
       body: data,
     })
   }
