@@ -17,12 +17,13 @@ Example transition action:
   uses: miguelcobain/gajira-update@master
   with:
     issue: GA-181
-    payload:
-      fields:
-        fixVersions:
-        - name: Next Hotfix
-        - name: Next Release
-        customfield_10095: someValue
+    payload: >
+      {
+        "fields": {
+          "fixVersions": [{ "name": "Next Release" }],
+          "customfield_10073": "someValue"
+        }
+      }
 }
 ```
 
@@ -54,12 +55,13 @@ jobs:
       uses: atlassian/gajira-transition@master
       with:
         issue: ${{ steps.create.outputs.issue }}
-        payload:
-          fields:
-            fixVersions:
-            - name: Next Hotfix
-            - name: Next Release
-            customfield_10095: someValue
+        payload: >
+          {
+            "fields": {
+              "fixVersions": [{ "name": "Next Release" }],
+              "customfield_10073": "someValue"
+            }
+          }
 ```
 ----
 ## Action Spec:

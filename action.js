@@ -18,7 +18,7 @@ module.exports = class {
 
     const issueId = argv.issue
 
-    await this.Jira.updateIssue(issueId, argv.payload)
+    await this.Jira.updateIssue(issueId, JSON.parse(argv.payload))
 
     console.log(`Updated ${issueId}.`)
     console.log(`Link to issue: ${this.config.baseUrl}/browse/${issueId}`)
